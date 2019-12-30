@@ -3,6 +3,10 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+INSTALL_REQUIRES = [
+    "pandas",
+    ]
+    
 setuptools.setup(
     name="pvi",
     version="0.0.1",
@@ -21,5 +25,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: BSD License",
     ],
+    install_requires=INSTALL_REQUIRES,
     python_requires='>=3.5',
 )
