@@ -53,6 +53,10 @@ MA_CONG_PVI = pd.DataFrame({
               4.449378],
 })
 
+def throws_pvi_year_exception():
+    py2 = pvi.calc_pvi_year(pd.to_datetime("1998-03-04"))
+    return py2
+
 class PviTests(unittest.TestCase):
 
     def test_ma_pvi(self):
@@ -71,4 +75,8 @@ class PviTests(unittest.TestCase):
         for i in range(0, len(MA_CONG_DIST)):
             self.assertEqual(MA_CONG_DIST.iloc[i]["PVI"],
                              MA_CONG_PVI.iloc[i]["PVI"])
-        
+
+    def test_calc_pvi_year(self):
+        py1 = pvi.calc_pvi_year(pd.to_datetime("2007-06-12"))
+        self.assertEqual(py1, 2004)
+        self.assertRaises(pvi.PviYearException, throws_pvi_year_exception)

@@ -35,7 +35,6 @@ PRES_VOTES = pd.DataFrame({
     'pvi_year': [2016, 2012, 2008, 2004, 2000],
     })
 PRES_VOTES["us_pres_pct"] = dem_pres_pct(PRES_VOTES)
-
 def calc_pvi(df):
     df_w_us = pd.merge(df, PRES_VOTES[["pvi_year", "us_pres_pct"]], on="pvi_year", how="left")
     dem_pct = dem_pres_pct(df_w_us)
@@ -51,3 +50,14 @@ def pvi_string(pvi):
         s = "EVEN"
     return s
 
+class PviYearException(Exception):
+    pass
+
+def calc_pvi_year(as_of_date):
+    is_pvi_year = ((as_of_date > PRES_VOTES["valid_as_of"]) &
+                   (as_of_date < PRES_VOTES["valid_until"]))
+    match = PRES_VOTES[is_pvi_year]
+    if len(match) == 1:
+        return match.iloc[0]["pvi_year"]
+    else:
+        raise PviYearException("Date out-of-range for PVI data", as_of_date)
