@@ -1,4 +1,4 @@
 *.pyc
 *~
-pvi.egg-info/*
+pvi.egg-info/
 
