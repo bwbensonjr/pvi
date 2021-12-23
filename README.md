@@ -26,7 +26,7 @@ pvi_string(pvi)
 
 The function returns a string like "D+5", "R+12", or "EVEN".
 
-## Example
+## Required columns
 
 The `pvi.calc_pvi` function works on a Pandas `DataFrame` that must include
 columns for the appropriate presidential election results.
@@ -42,6 +42,8 @@ The columns needed are as follows:
 | `Kerry_04` | `Bush_04` |
 | `Gore_00` | `Bush_00` |
 | `Clinton_96` | `Dole_96` |
+
+## Example
 
 ```
 >>> import pandas as pd
