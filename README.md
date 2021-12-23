@@ -2,9 +2,29 @@
 
 Calculate Partisan Voter Index (PVI)
 
-## calc_pvi
+```python
+calc_pvi(df, pvi_year=2020)
+```
+## Parameters
 
-## pvi_string
+- `df` : `DataFrame` - The dataframe containing appropriate vote columns
+- `pvi_year` : `int` - The presidential year for calculating PVI
+
+## Returns
+
+The function returns a Pandas `Series` object with numeric PVI values
+
+```python
+pvi_string(pvi)
+```
+
+## Parameters
+
+- `pvi` : `float` - The numeric PVI value for which we want a string
+
+## Returns
+
+The function returns a string like "D+5", "R+12", or "EVEN".
 
 ## Example
 
