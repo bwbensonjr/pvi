@@ -4,11 +4,10 @@ import pandas as pd
 
 MA_PRES = pd.DataFrame({
     "Region": ["MA"],
-    "cur_dem_votes": [1995196],
-    "cur_gop_votes": [1090893],
-    "prev_dem_votes": [1921290],
-    "prev_gop_votes": [1188314],
-    "pvi_year": [2016],
+    "Clinton_16": [1995196],
+    "Trump_16": [1090893],
+    "Obama_12": [1921290],
+    "Romney_12": [1188314],
     })
 
 MA_PVI_N = 11.677774499748029
@@ -24,11 +23,10 @@ MA_CONG_DIST = pd.DataFrame({
                  '7th Congressional',
                  '8th Congressional',
                  '9th Congressional'],
-    'cur_dem_votes': [194036, 197492, 202952, 225976, 258908, 224858, 254037, 231356, 205581],
-    'cur_gop_votes': [123953, 129437, 123347, 133705, 95922, 153244, 36018, 131624, 163643],
-    'prev_dem_votes': [213423, 199549, 189461, 211423, 235984, 212003, 233382, 213364, 212701],
-    'prev_gop_votes': [114339, 133195, 137869, 152699, 119934, 169966, 44275, 150825, 165212],
-    'pvi_year': 2016,
+    'Clinton_16': [194036, 197492, 202952, 225976, 258908, 224858, 254037, 231356, 205581],
+    'Trump_16': [123953, 129437, 123347, 133705, 95922, 153244, 36018, 131624, 163643],
+    'Obama_12': [213423, 199549, 189461, 211423, 235984, 212003, 233382, 213364, 212701],
+    'Romney_12': [114339, 133195, 137869, 152699, 119934, 169966, 44275, 150825, 165212],
 })
 
 MA_CONG_PVI = pd.DataFrame({
@@ -54,19 +52,19 @@ MA_CONG_PVI = pd.DataFrame({
 })
 
 def throws_pvi_year_exception():
-    py2 = pvi.calc_pvi_year(pd.to_datetime("1998-03-04"))
+    py2 = pvi.calc_pvi(MA_PRES, pvi_year=1973)
     return py2
 
 class PviTests(unittest.TestCase):
 
     def test_ma_pvi(self):
-        ma_pvi_n = pvi.calc_pvi(MA_PRES).iloc[0]
+        ma_pvi_n = pvi.calc_pvi(MA_PRES, pvi_year=2016).iloc[0]
         self.assertAlmostEqual(ma_pvi_n, MA_PVI_N, places=4)
         ma_pvi = pvi.pvi_string(ma_pvi_n)
         self.assertEqual(ma_pvi, MA_PVI)
 
     def test_ma_cong_pvi(self):
-        MA_CONG_DIST["PVI_N"] = pvi.calc_pvi(MA_CONG_DIST)
+        MA_CONG_DIST["PVI_N"] = pvi.calc_pvi(MA_CONG_DIST, pvi_year=2016)
         for i in range(0, len(MA_CONG_DIST)):
             self.assertAlmostEqual(MA_CONG_DIST.iloc[i]["PVI_N"],
                                    MA_CONG_PVI.iloc[i]["PVI_N"],
@@ -76,7 +74,5 @@ class PviTests(unittest.TestCase):
             self.assertEqual(MA_CONG_DIST.iloc[i]["PVI"],
                              MA_CONG_PVI.iloc[i]["PVI"])
 
-    def test_calc_pvi_year(self):
-        py1 = pvi.calc_pvi_year(pd.to_datetime("2007-06-12"))
-        self.assertEqual(py1, 2004)
+    def test_pvi_year_exception(self):
         self.assertRaises(pvi.PviYearException, throws_pvi_year_exception)

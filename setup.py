@@ -9,7 +9,7 @@ INSTALL_REQUIRES = [
     
 setuptools.setup(
     name="pvi",
-    version="0.0.1",
+    version="0.0.2",
     author="Brent Benson",
     author_email="bwbensonjr@gmail.com",
     maintainer="Brent Benson",
